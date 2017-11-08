@@ -7,6 +7,7 @@ package aula15ex01;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
@@ -50,6 +51,8 @@ public class Aula15Ex01 {
                         limpaEstoque(conexao);
                         break;
                     default:
+                        listaEstoque(conexao);
+                        
                 }
             }while(cmd !=0);
             
@@ -77,6 +80,19 @@ public class Aula15Ex01 {
         Statement operacao = conexao.createStatement();
         int n = operacao.executeUpdate("DELETE FROM produto WHERE qtd=0");
         System.out.println(n+ " registros excluidos");
+    }
+
+    private static void listaEstoque(Connection conexao) throws SQLException{
+        Statement operacao = conexao.createStatement();
+        ResultSet resultado = operacao.executeQuery("SELECT nome,qtd,atualizado FROM produto");
+        System.out.println("+Produto \tQTD+");
+        while(resultado.next()){
+            String nome = resultado.getString("nome");
+            Integer qtd = resultado.getInt("qtd");
+            System.out.println(String.format(" %s\t%d", nome,qtd));
+            
+        }
+         System.out.println("+ \t+");
     }
     
 }
