@@ -37,6 +37,7 @@ public class Aula15Ex01 {
                 System.out.println("Escola uma opção (0 para sair)");
                 System.out.println("\t 1 - Insere registro aleatório");
                 System.out.println("\t 2 - Diminui estoque");
+                System.out.println("\t 3 - Limpa estoque");
                 cmd = entrada.nextInt();
                 switch (cmd){
                     case 1:
@@ -44,6 +45,9 @@ public class Aula15Ex01 {
                         break;
                     case 2:
                         diminuiEstoques(conexao);
+                        break;
+                    case 3: 
+                        limpaEstoque(conexao);
                         break;
                     default:
                 }
@@ -67,6 +71,12 @@ public class Aula15Ex01 {
         Statement operacao = conexao.createStatement();
         int n = operacao.executeUpdate("UPDATE produto SET qtd = qtd -1 WHERE qtd>0");
         System.out.println(n+ " registros atualizados");
+    }
+
+    private static void limpaEstoque(Connection conexao) throws SQLException {
+        Statement operacao = conexao.createStatement();
+        int n = operacao.executeUpdate("DELETE FROM produto WHERE qtd=0");
+        System.out.println(n+ " registros excluidos");
     }
     
 }
